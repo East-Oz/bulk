@@ -44,7 +44,6 @@ public:
 			s->execute( &m_commands );
 		}
 	}
-
 };
 
 class FileObserver: public Observer
@@ -93,7 +92,6 @@ public:
 			}
 			myfile.close();
 		}
-
 	}
 };
 
