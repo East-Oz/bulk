@@ -140,10 +140,16 @@ int main( int argc, char *argv[] )
 	bool is_ready_data = false;
 
 	std::vector<std::string> vector_str;
+	int count = 1;
 	for( std::string line; std::getline( std::cin, line );)
 	{
 		if( line.empty() )
 		{
+			is_ready_data = true;
+		}
+		else if( ( count == gRowCount ) && ( open_braces == 0 ) )
+		{
+			vector_str.push_back( line );
 			is_ready_data = true;
 		}
 		else if( line.find( '{' ) != std::string::npos )
@@ -168,7 +174,9 @@ int main( int argc, char *argv[] )
 			ptrExec->set_commands( vector_str );
 			vector_str.clear();
 			is_ready_data = false;
+			count = 0;
 		}
+		count++;
 	}
 
     return 0;
