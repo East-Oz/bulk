@@ -44,6 +44,7 @@ public:
 			s->execute( &m_commands );
 		}
 	}
+
 };
 
 class FileObserver: public Observer
@@ -92,6 +93,7 @@ public:
 			}
 			myfile.close();
 		}
+
 	}
 };
 
@@ -147,22 +149,22 @@ int main( int argc, char *argv[] )
 		{
 			is_ready_data = true;
 		}
+		else if (line.find('{') != std::string::npos)
+		{
+			++open_braces;
+		}
+		else if ((line.find('}') != std::string::npos) && (open_braces > 0))
+		{
+			--open_braces;
+			if (open_braces == 0)
+			{
+				is_ready_data = true;
+			}
+		}
 		else if( ( count == gRowCount ) && ( open_braces == 0 ) )
 		{
 			vector_str.push_back( line );
 			is_ready_data = true;
-		}
-		else if( line.find( '{' ) != std::string::npos )
-		{
-			++open_braces;
-		}
-		else if( ( line.find( '}' ) != std::string::npos ) && ( open_braces > 0 ) )
-		{
-			--open_braces;
-			if( open_braces == 0 )
-			{
-				is_ready_data = true;
-			}
 		}
 		else
 		{
