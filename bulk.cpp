@@ -75,7 +75,7 @@ public:
 		myfile.open( fn );
 		if( myfile.is_open() )
 		{
-			for( int i = 0; i < commands->size(); i += gRowCount )
+			for( size_t i = 0; i < commands->size(); i += gRowCount )
 			{
 				for( int n = 0; n < gRowCount; ++n )
 				{
@@ -108,7 +108,7 @@ public:
 
 	void execute( std::vector<std::string>* commands ) override
 	{
-		for( int i = 0; i < commands->size(); i += gRowCount )
+		for( size_t i = 0; i < commands->size(); i += gRowCount )
 		{
 			for( int n = 0; n < gRowCount; ++n )
 			{
@@ -180,6 +180,9 @@ int main( int argc, char *argv[] )
 		}
 		count++;
 	}
+	ptrExec->set_commands(vector_str);
+	vector_str.clear();
+
 
     return 0;
 }
