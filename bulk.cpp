@@ -75,21 +75,13 @@ public:
 		myfile.open( fn );
 		if( myfile.is_open() )
 		{
-			for( size_t i = 0; i < commands->size(); i += gRowCount )
+			for( size_t i = 0; i < commands->size(); ++i )
 			{
-				for( int n = 0; n < gRowCount; ++n )
-				{
-					int cnt = i + n;
-
-					if( cnt < commands->size() )
-					{
-						myfile << commands->at( cnt );
-						if( ( n < gRowCount - 1 ) && ( cnt != ( commands->size() - 1 ) ) )
-							myfile << ", ";
-						else
-							myfile << std::endl;
-					}
-				}
+				myfile << commands->at( i );
+				if(  i != ( commands->size() - 1 ) )
+					myfile << ", ";
+				else
+					myfile << std::endl;
 			}
 			myfile.close();
 		}
@@ -108,22 +100,13 @@ public:
 
 	void execute( std::vector<std::string>* commands ) override
 	{
-		for( size_t i = 0; i < commands->size(); i += gRowCount )
+		for( size_t i = 0; i < commands->size(); ++i )
 		{
-			for( int n = 0; n < gRowCount; ++n )
-			{
-				int cnt = i + n;
-
-				if( cnt < commands->size() )
-				{
-					std::cout << commands->at( cnt );
-					if( ( n < gRowCount - 1 ) && ( cnt != ( commands->size() - 1 ) ) )
-						std::cout << ", ";
-					else
-						std::cout << std::endl;
-				}
-			}
-
+			std::cout << commands->at( i );
+			if( i < (commands->size() - 1) )
+				std::cout << ", ";
+			else
+				std::cout << std::endl;
 		}
 	}
 };
@@ -152,6 +135,10 @@ int main( int argc, char *argv[] )
 		else if (line.find('{') != std::string::npos)
 		{
 			++open_braces;
+			if( open_braces == 1 )
+			{
+				is_ready_data = true;
+			}
 		}
 		else if ((line.find('}') != std::string::npos) && (open_braces > 0))
 		{
@@ -182,7 +169,6 @@ int main( int argc, char *argv[] )
 	}
 	ptrExec->set_commands(vector_str);
 	vector_str.clear();
-
 
     return 0;
 }
